@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% load static %}
+
+{% block title %}Eliminar producto{% endblock %}
+
+{% block content %}
+
+{% include 'includes/navbar_log.html' %}
+
+<div class="container">
+	<div class="card text-center">
+		<div class="card-body">
+			<h5 class="card-title"><img src="{% static 'img/OnlineMarketLogo.png' %}" class="img-fluid" alt="Logo"></h5>
+			<p class="card-text">
+			<form method="POST" enctype="multipart/form-data">{% csrf_token %}
+				<h1 class="card-title">¿Estás seguro de que deseas eliminar el producto {{ object.name }}?</h1>
+				<button type="submit" class="btn btn-danger me-3">Sí, eliminar producto</button>
+				<a href="{% url 'product_app:product_list' %}" class="btn btn-info">Cancelar</a>
+			</form>
+			</p>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

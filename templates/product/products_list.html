@@ -1,25 +1,18 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}Mis productos{% endblock %}
+{% block title %}Compra tus productos preferidos{% endblock %}
 
 {% block content %}
 
-{% if request.user.user_type == '1' %}
-
-{% include 'includes/navbar_log.html' %}
-
-{% else %}
-
 {% include 'includes/navbar_log_buyer.html' %}
-
-{% endif %}
 
 <div class="container">
 	<div class="card">
-		{% if seller_list %}
+		{% if list_products %}
+
 		<!-- Title -->
-		<h1 class="card-text text-center">Mis productos</h1>
+		<h1 class="card-text text-center">Compra productos!!</h1>
 
 		<!-- Table Employees -->
 		<table class="table table-hover table-responsive align-middle text-center">
@@ -29,28 +22,30 @@
 					<th scope="col">Descripción</th>
 					<th scope="col">Precio</th>
 					<th scope="col">Foto</th>
-					{% if request.user.user_type == '1' %}
-						<th scope="col">Acciones</th>
-					{% endif %}
+					<th scope="col"></th>
 				</tr>
 			</thead>
 			<tbody class="table-light">
-				{% for e in seller_list %}
+				{% for e in list_products %}
 				<tr>
 					<td>{{ e.name }}</td>
 					<td>{{ e.description }}</td>
-					<td>${{ e.price }}</td>
+					<td>{{ e.price }}</td>
 					{% if e.photo %}
 					<td><img class="img-fluid list-photo-view" src="{{ e.photo.url }}" alt="{{ e.name }}"></td>
 					{% else %}
 					<td><img class="img-fluid list-photo-view" src="{% static 'img/non_photo.jpg' %}" alt="{{ e.name }}"></td>
 					{% endif %}
-					{% if request.user.user_type == '1' %}
 					<td>
-						<a class="btn btn-warning me-3" href="{% url 'product_app:update_product' e.id %}">Editar</a>
-						<a class="btn btn-danger" href="{% url 'product_app:delete_product' e.id %}">Eliminar</a>
+						<form action="{% url 'product_app:buy_product' e.id %}" method="POST">{% csrf_token %}
+							{% if e.price < request.user.money %}
+							<button type="submit" class="btn btn-outline-danger">Comprar</button>
+							{% else %}
+							<button disabled class="btn btn-outline-danger">Comprar</button>
+							{% endif %}
+						</form>
 					</td>
-					{% endif %}
+					<!--<td><a class="btn btn-light" href="url 'product_app:detail_product_seller' e.id ">Ver</a></td>-->
 				</tr>
 				{% endfor %}
 			</tbody>
@@ -61,11 +56,10 @@
 
 		{% else %}
 
-		<h1 class="card-text text-center">Aún no tienes productos</h1>
+		<h1 class="card-text text-center">Aún no hay productos disponibles</h1>
 		<i class="text-center bi bi-cone-striped"></i>
 
 		{% endif %}
-
 	</div>
 </div>
 

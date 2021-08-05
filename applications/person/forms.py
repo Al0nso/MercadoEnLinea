@@ -23,6 +23,14 @@ class PersonForm(forms.ModelForm):
             'user_type'
         ]
 
+    def clean(self):
+        cleaned_data = super(PersonForm, self).clean()
+        try:
+            user = User.objects.get(username=cleaned_data['username'])
+        except:
+            return self.cleaned_data
+        raise forms.ValidationError('El nombre de usuario ya existe, elige otro')
+
 class LoginForm(forms.Form):
     '''
     Forms for login requiring:

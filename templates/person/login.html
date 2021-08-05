@@ -15,21 +15,22 @@
 		<div class="card-body">
 			<h5 class="card-title"><img src="{% static 'img/OnlineMarketLogo.png' %}" class="img-fluid" alt="Logo"></h5>
 			<p class="card-text">
-				<form method="POST">{% csrf_token %}
-					<div class="mb-3 row">
-						<label for="username" class="col-md-2 col-sm-4 col-form-label card-text">Usuario</label>
-						<div class="col-md-10 col-sm-8">
-							{{ form.username | add_class:'form-control' }}
-						</div>
+			<form method="POST">{% csrf_token %}
+				<div class="mb-3 row">
+					<label for="username" class="col-md-2 col-sm-4 col-form-label card-text">Usuario</label>
+					<div class="col-md-10 col-sm-8">
+						{{ form.username | add_class:'form-control' }}
 					</div>
-					<div class="mb-3 row">
-						<label for="" class="col-md-2 col-sm-4 col-form-label card-text">Contraseña</label>
-						<div class="col-md-10 col-sm-8">
-							{{ form.password | add_class:'form-control' }}
-						</div>
+				</div>
+				<div class="mb-3 row">
+					<label for="" class="col-md-2 col-sm-4 col-form-label card-text">Contraseña</label>
+					<div class="col-md-10 col-sm-8">
+						{{ form.password | add_class:'form-control' }}
 					</div>
-					<button type="submit" class="btn btn-danger">Iniciar Sesión</button>
-				</form>
+				</div>
+				{{ form.non_field_errors }}
+				<button type="submit" class="btn btn-danger">Iniciar Sesión</button>
+			</form>
 			</p>
 		</div>
 	</div>

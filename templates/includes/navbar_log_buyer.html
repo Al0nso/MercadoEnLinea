@@ -1,7 +1,10 @@
 {% load static %}
 
 {% url 'home_app:home' as home %}
+{% url 'person_app:add_money' user.id as money %}
 {% url 'person_app:logout' as logout %}
+{% url 'product_app:product_list' as product_list %}
+{% url 'product_app:search' as search %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
   <div class="container-fluid">
@@ -14,9 +17,18 @@
 				<li class="nav-item">
 					<a class="nav-link {% if request.path == home %}active{% endif %}" aria-current="page" href="{{ home }}">Inicio</a>
 				</li>
+				<li class="nav-item">
+					<a class="nav-link {% if request.path == money %}active{% endif %}" aria-current="page" href="{{ money }}">Agregar saldo</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link {% if request.path == product_list %}active{% endif %}" aria-current="page" href="{{ product_list }}">Mis Productos</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link {% if request.path == search %}active{% endif %}" aria-current="page" href="{{ search }}">Comprar Productos</a>
+				</li>
 			</ul>
 			<div class="d-flex">
-				<button class="btn btn-outline-danger me-2" disabled="true">Tu saldo es: {{ user.money }}</button> 
+				<button class="btn btn-outline-danger me-2" disabled="true">Tu saldo es: ${{ request.user.money }}</button> 
 				<a class="btn btn-outline-danger" aria-current="page" href="{{ logout }}">Cerrar Sesión</a>
 			</div>
 		</div>

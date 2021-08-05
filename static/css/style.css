@@ -26,3 +26,13 @@ tbody, td, tfoot, th, thead, tr {
 	background-color: rgba(247, 197, 204, 1) !important;
 	color: rgba(204, 49, 61, 1);
 }
+
+.bi-cone-striped {
+	color: rgba(204, 49, 61, 1) !important;
+	font-size: 20rem;
+}
+
+.list-photo-view {
+	max-width: 100px;
+	max-height: 100px;
+}

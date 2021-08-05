@@ -5,7 +5,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponseRedirect
 from django.views.generic.edit import FormView
 from django.views.generic import (
-    View
+    View,
+    UpdateView
 )
 
 from .forms import PersonForm, LoginForm
@@ -31,9 +32,9 @@ class RegisterView(FormView):
             phone = form.cleaned_data['phone'], 
             user_type = form.cleaned_data['user_type'],
         )
-        subject = 'Contraseña generada'
+        subject = 'Contraseña generada para el usuario: ' + str(form.cleaned_data['username'])
         message = 'La contraseña es: ' + password
-        from_email = 'giovanny.m.t@ciencias.unam.mx'
+        from_email = 'onlinemarket2021@gmail.com'
         send_mail(subject, message, from_email, [form.cleaned_data['email']])
         # return HttpResponseRedirect(
         #   reverse(
@@ -63,3 +64,12 @@ class LogoutView(View):
                 'person_app:login'
             )
         )
+
+class AddMoneyView(BuyerMixin, UpdateView):
+    template_name = 'person/add_money.html'
+    model = User
+    fields = [
+        'money',
+    ]
+    success_url = reverse_lazy('product_app:search')
+

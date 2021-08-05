@@ -2,7 +2,7 @@
 
 {% url 'home_app:home' as home %}
 {% url 'product_app:product_register' as register %}
-{% url 'product_app:product_list_seller' as list_seller %}
+{% url 'product_app:product_list' as product_list %}
 {% url 'person_app:logout' as logout %}
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
@@ -20,11 +20,11 @@
 					<a class="nav-link {% if request.path == register %}active{% endif %}" aria-current="page" href="{{ register }}">Registrar Producto</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link {% if request.path == list_seller %}active{% endif %}" aria-current="page" href="{{ list_seller }}">Mis Productos</a>
+					<a class="nav-link {% if request.path == product_list %}active{% endif %}" aria-current="page" href="{{ product_list }}">Mis Productos</a>
 				</li>
 			</ul>
 			<div class="d-flex">
-				<button class="btn btn-outline-danger me-2" disabled="true">Tu saldo es: {{ user.money }}</button> 
+				<button class="btn btn-outline-danger me-2" disabled="true">Tu saldo es: ${{ request.user.money }}</button> 
 				<a class="btn btn-outline-danger" aria-current="page" href="{{ logout }}">Cerrar Sesión</a>
 			</div>
 		</div>

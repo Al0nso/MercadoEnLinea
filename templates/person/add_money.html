@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+
+{% load widget_tweaks %}
+
+{% load static %}
+
+{% block title %}Saldo{% endblock %}
+
+{% block content %}
+
+{% include 'includes/navbar_log_buyer.html' %}
+
+{% if user.id == request.user.id %}
+
+<div class="container">
+	<div class="card text-center">
+		<div class="card-body">
+			<h5 class="card-title"><img src="{% static 'img/OnlineMarketLogo.png' %}" class="img-fluid" alt="Logo"></h5>
+			<p class="card-text">
+				<form method="POST">{% csrf_token %}
+					<div class="mb-3 row">
+						<label for="username" class="col-md-2 col-sm-4 col-form-label card-text">Saldo Total: $</label>
+						<div class="col-md-10 col-sm-8">
+							{{ form.money | add_class:'form-control' }}
+						</div>
+					</div>
+					<button type="submit" class="btn btn-danger">Modificar Saldo</button>
+				</form>
+			</p>
+		</div>
+	</div>
+</div>
+
+{% else %}
+
+<div class="container">
+	<div class="card text-center">
+		<div class="card-body">
+			<h5 class="card-title"><img src="{% static 'img/OnlineMarketLogo.png' %}" class="img-fluid" alt="Logo"></h5>
+			<p class="card-text">
+				No puedes modificar el saldo de alguien más
+			</p>
+		</div>
+	</div>
+</div>
+
+
+{% endif %}
+
+{% endblock %}

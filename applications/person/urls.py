@@ -19,6 +19,11 @@ urlpatterns = [
         'logout/',
         views.LogoutView.as_view(),
         name='logout'
-    )
+    ),
+    path(
+        'add_money/<pk>',
+        views.AddMoneyView.as_view(),
+        name='add_money'
+    ),
 ]
 

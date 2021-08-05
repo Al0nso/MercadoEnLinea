@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MinValueValidator
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 
 from .managers import UserManager
@@ -16,7 +17,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     name = models.CharField(max_length=50, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     email = models.EmailField()
-    money = models.FloatField(default=0.0)
+    money = models.FloatField(default=0.0, validators=[MinValueValidator(0.0)])
     phone = models.CharField(max_length=10, blank=True)
     user_type = models.CharField(max_length=1, choices=TYPE_USER, blank=False, default=BUYER)
     is_staff = models.BooleanField(default=False)
