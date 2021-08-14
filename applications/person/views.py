@@ -9,7 +9,7 @@ from django.views.generic import (
     UpdateView
 )
 
-from .forms import PersonForm, LoginForm
+from .forms import PersonForm, LoginForm, UpdateMoney
 from .models import User
 from .functions import pass_generator
 from .mixins import BuyerMixin, SellerMixin
@@ -68,8 +68,6 @@ class LogoutView(View):
 class AddMoneyView(BuyerMixin, UpdateView):
     template_name = 'person/add_money.html'
     model = User
-    fields = [
-        'money',
-    ]
+    form_class = UpdateMoney
     success_url = reverse_lazy('product_app:search')
 

@@ -63,3 +63,16 @@ class LoginForm(forms.Form):
         if not authenticate(username=username, password=password):
             raise forms.ValidationError('Los datos del usuario no son correctos')
         return self.cleaned_data
+
+class UpdateMoney(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = [
+            'money',
+        ]
+
+    def clean(self):
+        cleaned_data = super(UpdateMoney, self).clean()
+        if cleaned_data['money'] < 0:
+            raise forms.ValidationError('Debes ingresar una cantidad mayor a 0')
+        return self.cleaned_data

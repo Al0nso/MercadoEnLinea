@@ -9,11 +9,16 @@
 
 <div class="container">
 	<div class="card">
-		{% if list_products %}
-
 		<!-- Title -->
 		<h1 class="card-text text-center">Compra productos!!</h1>
 
+		<form method="GET">{% csrf_token %}
+			<div class="input-group mb-3">
+				<input type="text" class="form-control" placeholder="Buscar" id="kword" name="kword">
+				<button class="btn btn-primary" type="submit"><i class="bi bi-search"></i></button>
+			</div>
+		</form>
+		{% if list_products %}
 		<!-- Table Employees -->
 		<table class="table table-hover table-responsive align-middle text-center">
 			<thead class="table-dark">
@@ -56,7 +61,7 @@
 
 		{% else %}
 
-		<h1 class="card-text text-center">Aún no hay productos disponibles</h1>
+		<h1 class="card-text text-center">No se han encontrado resultados</h1>
 		<i class="text-center bi bi-cone-striped"></i>
 
 		{% endif %}

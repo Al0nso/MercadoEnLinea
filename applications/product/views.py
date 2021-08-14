@@ -3,6 +3,7 @@ from django.urls import reverse_lazy, reverse
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.postgres.search import TrigramSimilarity
 from django.views.generic.edit import FormView
 from django.views.generic import (
     View,
@@ -39,9 +40,16 @@ class ProductsListView(LoginRequiredMixin, ListView):
     login_url = reverse_lazy('person_app:login')
 
     def get_queryset(self):
-        list_products = Product.objects.filter(
-            owner=self.request.user
-        ).order_by('id')
+        keyword = self.request.GET.get('kword')
+        if keyword:
+            list_products = Product.objects.filter(
+                owner=self.request.user,
+                name__trigram_similar=keyword,
+            ).order_by('id')
+        else:
+            list_products = Product.objects.filter(
+                owner=self.request.user,
+            ).order_by('id')
         return list_products
 
 class ProductSellView(BuyerMixin, ListView):
@@ -50,9 +58,16 @@ class ProductSellView(BuyerMixin, ListView):
     paginate_by = 5
 
     def get_queryset(self):
-        list_products = Product.objects.filter(
-            is_sold=False
-        ).order_by('id')
+        keyword = self.request.GET.get('kword')
+        if keyword:
+            list_products = Product.objects.filter(
+                is_sold=False,
+                name__trigram_similar=keyword,
+            ).order_by('id')
+        else:
+            list_products = Product.objects.filter(
+                is_sold=False,
+            ).order_by('id')
         return list_products
 
 class BuyProductView(BuyerMixin, View):
